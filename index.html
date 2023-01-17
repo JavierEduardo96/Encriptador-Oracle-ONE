@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Encriptador</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <main>
+            <div class="entrada">
+                <img class="logo" src="imagenes/Logo.png">
+                <!-- <input type="text" id="entrada" class="input-padron" placeholder="Aqui va el texto para encriptar mano">-->
+                <textarea id="entrada" class="input-padron" placeholder="Ingrese el texto aqui" rows="10"></textarea>
+                <div class="adv">
+                    <img class="exclamation"src="imagenes/exclamation.png">
+                    <p class="adv-text">Solo letras minúsculas y sin acentos</p>
+                </div>
+                <div class="botones">
+                    <button class="encriptar" onclick="encriptar()">Encriptar</button>
+                    <button class="desencriptar" onclick="desencriptar()">Desencriptar</button>
+                </div>
+                
+            </div>
+            
+
+            <div class="salida">
+                <div class="no-entrada">
+                    <img class="muneco" src="imagenes/Muñeco.png">
+                    <p>Ningún mensaje fue encontrado</p>
+                    <p>Ingresa el texto que desees encriptar o desencriptar.</p>
+                </div>
+                
+                <p id="salida-texto">Aqui va lo encriptado</p>
+                <button class="copiar" onclick="copiar()">Copiar</button>
+            </div>
+
+            <script>            /*Aqui va el codigo perron*/
+                document.querySelector(".no-entrada").style.display = "block";
+                document.querySelector(".copiar").style.display = "none";
+                document.querySelector("#salida-texto").style.display = "none";
+
+                function minOnly(cad){
+                    var flag=true;
+                    for (var i=0; i<cad.length; i++){
+                        console.log(cad.charCodeAt(i));
+                        if (!((97 <= cad.charCodeAt(i) && cad.charCodeAt(i) <= 122) || (cad.charCodeAt(i) == 32)) ){
+                            flag=false;
+                            break;
+                        }
+                    }
+                    return flag;
+                }
+                
+                function encriptar(){
+                    var entrada=document.querySelector("#entrada").value;
+                    var salida=[];
+                    
+                    if (entrada.length==0){
+                        document.querySelector(".no-entrada").style.display = "block";
+                        document.querySelector(".copiar").style.display = "none";
+                        document.querySelector("#salida-texto").style.display = "none";
+                    }
+                    else if (minOnly(entrada)==false){
+                        alert("No puede ingresar letras mayusculas o caracteres especiales. Intente de nuevo");
+                    }else{
+                        for (var i=0; i<entrada.length; i++){
+                            if (entrada[i]=="e"){
+                                salida=salida+"enter";
+                            }else if(entrada[i]=="i"){
+                                salida=salida+"imes";
+                            }else if(entrada[i]=="a"){
+                                salida=salida+"ai";
+                            }else if(entrada[i]=="o"){
+                                salida=salida+"ober";
+                            }else if(entrada[i]=="u"){
+                                salida=salida+"ufat";
+                            }else{
+                                salida=salida+entrada[i];
+                            }
+                        }
+                        document.querySelector(".no-entrada").style.display = "none";
+                        document.querySelector(".copiar").style.display = "block";
+                        document.querySelector("#salida-texto").style.display = "block";
+                        document.querySelector("#salida-texto").innerText = salida;
+                        document.querySelector("#entrada").value = "";
+                        document.querySelector("#entrada").focus();
+                    }
+                }
+    
+                function desencriptar(){
+                    var entrada=document.querySelector("#entrada").value;
+                    var salida=entrada.replace(/enter/g,"e");
+                    if (entrada.length==0){
+                        document.querySelector(".no-entrada").style.display = "block";
+                        document.querySelector(".copiar").style.display = "none";
+                        document.querySelector("#salida-texto").style.display = "none";
+                    }else if (minOnly(entrada)==false){
+                        alert("No puede ingresar letras mayusculas o caracteres especiales. Intente de nuevo");
+                    }else{
+                        var tmp=salida.replace(/imes/g,"i");
+                        salida=tmp.replace(/ai/g,"a");
+                        tmp=salida.replace(/ober/g,"o");
+                        salida=tmp.replace(/ufat/g,"u");
+                        document.querySelector(".no-entrada").style.display = "none";
+                        document.querySelector(".copiar").style.display = "block";
+                        document.querySelector("#salida-texto").style.display = "block";
+                        document.querySelector("#salida-texto").innerText = salida;
+                        document.querySelector("#entrada").value = "";
+                        document.querySelector("#entrada").focus();
+                    }
+
+                }
+                
+                function copiar(){
+                    var copia=document.querySelector("#salida-texto").innerText;
+                    navigator.clipboard.writeText(copia);
+                    document.querySelector("#entrada").focus();
+                }
+            </script>
+        </main>
+        <footer>
+            <p class="copyright">&copy Hecho por Javier Eduardo Acuña González - 2023</p>
+            <div class="contacto">
+                <a href="https://www.linkedin.com/in/javier-eduardo-acuna-gonzalez/">
+                    <img class="linkedin" src="imagenes/LI-In-Bug.png" alt="Logo LinkedIn" class="linkedin">
+                </a>
+                <a href="https://github.com/JavierEduardo96">
+                    <img class="git" src="imagenes/github-mark.png" alt="Logo GitHub">
+                </a>
+            </div>
+            
+            
+        </footer>
+
+</html>
